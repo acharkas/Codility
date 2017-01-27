@@ -1,4 +1,4 @@
-# We draw N discs on a plane. The discs are numbered from 0 to N − 1. A zero-indexed
+# We draw N discs on a plane. The discs are numbered from 0 to N - 1. A zero-indexed
 # array A of N non-negative integers, specifying the radiuses of the discs, is given.
 # The J-th disc is drawn with its center at (J, 0) and radius A[J].
 
@@ -10,6 +10,12 @@ def solution(a)
 	count = 0
 	open_disks = []
 	closed_disks = []
+
+
+  (0..(a.length-1)).each do |i|
+    open_disks[i] = 0
+    closed_disks[i] = 0
+  end
 
 	# count at each index how many disks are open and how many are closed
 	(0..(a.length-1)).each do |i|
@@ -34,14 +40,18 @@ def solution(a)
 	open_disks_count = 0
 	(0..(a.length-1)).each do |i|
 		open_disks_count = open_disks_count + open_disks[i]
-		while(closed_disks[i] > 0)
-			count = count + open_disks_count - 1 # there is one closed disk so it is not counted
-			open_disks_count = open_disks_count - 1
-			closed_disks[i] = closed_disks[i] - 1
-			if (count > 10000000)
-                return -1;
-            end
-		end
+    if (open_disks_count == 0 || closed_disks[i] == 0)
+      next
+    end
+
+		count = count + (closed_disks[i] * ( 2 * open_disks_count - 1 - closed_disks[i]))/2 # there is one closed disk so it is not counted
+		open_disks_count = open_disks_count - closed_disks[i]
+		if (count > 10000000)
+      return -1
+    end
+
 	end
+
+	count
 end
 

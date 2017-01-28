@@ -16,20 +16,20 @@ def solution(h)
 	stones_count = 0
 
 	# loop over H
-	h.each do |h_i|
-	  if stack.length > 0 && max_wall_height == h_i
+	(0..(h.length-1)).each do |i|
+	  if stack.length > 0 && max_wall_height == h[i]
 	    next
-		elsif stack.length > 0 && max_wall_height > h_i
-			# pop all elements greater than h_i, and increase number of blocks
-			while (stack.length > 0 && h_i < stack.max)
+		elsif stack.length > 0 && max_wall_height > h[i]
+			# pop all elements greater than h[i], and increase number of blocks
+			while (stack.length > 0 && h[i] < stack.max)
 				stack.shift()
 				stones_count  = stones_count + 1
 			end
 		end
-		if(stack.max != h_i)
-		  stack.unshift(h_i)
+		if(stack.max != h[i])
+		  stack.unshift(h[i])
 		end
-		max_wall_height = h_i
+		max_wall_height = h[i]
 	end
 
 	stones_count = stones_count + stack.length
